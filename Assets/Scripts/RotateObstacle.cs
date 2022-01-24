@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveObstacle : MonoBehaviour
+public class RotateObstacle : MonoBehaviour
 {
     public float speed;
-    public float value;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +14,6 @@ public class MoveObstacle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector2(transform.position.x, transform.position.y + Mathf.Sin(Time.time * speed) * value * Time.deltaTime);
+        transform.Rotate(0, 0, speed * Time.deltaTime);
     }
 }
