@@ -7,7 +7,7 @@ using TMPro;
 
 public class UIManager : MonoBehaviour {
     #region Declaration
-    public List<GameObject> uiElement;
+    public List<GameObject> uIElements;
     [Header("Text")]
 
     [Header("Debug")]
@@ -22,8 +22,8 @@ public class UIManager : MonoBehaviour {
     }
 
     public void ChangeState(GameManager.GameStates oldGameState) {
-        uiElement[(int)oldGameState].SetActive(false);
-        uiElement[(int)GameManager.GameState].SetActive(true);
+        uIElements[(int)oldGameState].SetActive(false);
+        uIElements[(int)GameManager.GameState].SetActive(true);
     }
     #region Debug
     #endregion

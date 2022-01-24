@@ -1,18 +1,52 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System;
 
 public class SoundManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public static SoundManager Instance { get; private set; }
+
+    public Sound[] sounds;
+    private void Awake() {
+        Instance = this;
+        foreach(Sound s in sounds) {
+            s.source = gameObject.AddComponent<AudioSource>();
+            s.source.clip = s.clip;
+            s.source.volume = s.volume;
+            s.source.loop = s.loop;
+            s.source.playOnAwake = s.playOnAwake;
+        }
+    }
+    private void Start() {
+        Play("MainMenuTheme");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void Play(string name) {
+        Sound s = Array.Find(sounds, sound => sound.soundName == name);
+        if (s == null) {
+            Debug.LogWarning("Sound not found");
+            return;
+        }
+        s.source.Play();
+    }
+
+    public void Stop(string name) {
+        Sound s = Array.Find(sounds, sound => sound.soundName == name);
+        if (s == null) {
+            Debug.LogWarning("Sound not found");
+            return;
+        }
+        s.source.Stop();
+    }
+
+    public void StopAllSounds() {
+        foreach(Sound s in sounds) {
+            s.source.Stop();
+        }
+    }
+
+    public void ChangeVolume(float vol) {
+        foreach(Sound s in sounds) {
+            s.source.volume = vol;
+        }
     }
 }
