@@ -13,6 +13,5 @@ public class Managers : MonoBehaviour
             GameManager.Instance.SaveData();
         }
         GameManager.Instance.ChangeGameState(GameManager.GameStates.MainMenu);
-        SceneManager.LoadScene("MainMenu");
     }
 }

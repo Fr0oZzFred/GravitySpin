@@ -5,16 +5,17 @@ using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class GameManagerData {
-    public int tutu;
+    public int lastLevelDone;
     public GameManagerData(GameManager gameManager) {
-        tutu = gameManager.tutu;
+        lastLevelDone = gameManager.lastLevelDone;
     }
 }
 public class GameManager : MonoBehaviour
 {
     #region Declaration
 
-    public int tutu = 1;
+    public int lastLevelDone = 1;
+    public int levelCount;
 
     public enum GameStates {
         MainMenu,
@@ -38,7 +39,7 @@ public class GameManager : MonoBehaviour
     }
     public void LoadData() {
         GameManagerData data = SaveSystem.LoadGameManager();
-        tutu = data.tutu;
+        lastLevelDone = data.lastLevelDone;
     }
 
     public void ChangeGameState(GameStates gs) {
@@ -47,8 +48,27 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.ChangeState(oldGS);
         switch (GameState) {
             case GameStates.MainMenu:
+                LoadScene("MainMenu");
+                SoundManager.Instance.StopAllSounds();
+                SoundManager.Instance.Play("MainMenuTheme");
+                Time.timeScale = 1f;
+                break;
+            case GameStates.LevelSelection:
+                break;
+            case GameStates.Settings:
                 break;
             case GameStates.InGame:
+                Time.timeScale = 1f;
+                break;
+            case GameStates.Pause:
+                Time.timeScale = 0f;
+                break;
+            case GameStates.GameOver:
+                Time.timeScale = 0f;
+                UIManager.Instance.GameOver(LevelManager.Instance.win);
+                if (LevelManager.Instance.win) {
+                    lastLevelDone = lastLevelDone < levelCount ? lastLevelDone + 1 : lastLevelDone;
+                }
                 break;
         }
     }
@@ -82,14 +102,24 @@ public class GameManager : MonoBehaviour
     }
 
     #region SceneManagement
-    public void ChangeScene(string name) {
+    public void LoadScene(string name) {
         SceneManager.LoadScene(name);
     }
-    public void ChangeScene(int name) {
+    public void LoadScene(int name) {
         SceneManager.LoadScene(name);
     }
     public void ReloadScene() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        ChangeGameState("InGame");
+    }
+    public void PlayNextLevel() {
+        if(lastLevelDone < levelCount) {
+            LoadScene("Level " + (lastLevelDone + 1));
+            ChangeGameState("InGame");
+        } else {
+            LoadScene("Level " + levelCount);
+            ChangeGameState("InGame");
+        }
     }
     #endregion
     public void Quit() {

@@ -16,9 +16,6 @@ public class SoundManager : MonoBehaviour
             s.source.playOnAwake = s.playOnAwake;
         }
     }
-    private void Start() {
-        Play("MainMenuTheme");
-    }
 
     public void Play(string name) {
         Sound s = Array.Find(sounds, sound => sound.soundName == name);

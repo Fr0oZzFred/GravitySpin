@@ -8,8 +8,12 @@ using TMPro;
 public class UIManager : MonoBehaviour {
     #region Declaration
     public List<GameObject> uIElements;
-    [Header("Text")]
 
+    //[Header("Text")]
+    [Header("GameOver")]
+    public GameObject winGo;
+    public GameObject looseGo;
+    public GameObject playNextLevelGo;
     [Header("Debug")]
     public bool enabledDebug;
     #endregion
@@ -24,6 +28,15 @@ public class UIManager : MonoBehaviour {
     public void ChangeState(GameManager.GameStates oldGameState) {
         uIElements[(int)oldGameState].SetActive(false);
         uIElements[(int)GameManager.GameState].SetActive(true);
+    }
+
+    public void GameOver(bool win) {
+        winGo.SetActive(win);
+        playNextLevelGo.SetActive(win);
+        looseGo.SetActive(!win);
+        SoundManager.Instance.StopAllSounds();
+        if (win) SoundManager.Instance.Play("WinTheme");
+        else SoundManager.Instance.Play("LooseTheme");
     }
     #region Debug
     #endregion
