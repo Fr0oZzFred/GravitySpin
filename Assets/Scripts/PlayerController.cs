@@ -10,7 +10,9 @@ public class PlayerController : MonoBehaviour {
     public float speed;
     public bool canJump = false;
     Animator animator;
-    
+    public GameObject animLeft;
+    public GameObject animRight;
+
     public SpriteRenderer srBackground;
     public Color colorUp;
     public Color colorDown;
@@ -42,6 +44,26 @@ public class PlayerController : MonoBehaviour {
 
         //Animation
         animator.SetFloat("Speed",rb.velocity.x);
+        if (rb.velocity.x > 15 && rb.gravityScale > 0) {
+            animLeft.SetActive(true);
+            animRight.SetActive(false);
+        } 
+        else if (rb.velocity.x > 15 && rb.gravityScale < 0) {
+            animRight.SetActive(true);
+            animLeft.SetActive(false);
+        }
+        else if (rb.velocity.x < -15 && rb.gravityScale > 0) {
+            animRight.SetActive(true);
+            animLeft.SetActive(false);
+        } 
+        else if (rb.velocity.x < -15 && rb.gravityScale < 0) {
+            animLeft.SetActive(true);
+            animRight.SetActive(false);
+        } 
+        else {
+            animLeft.SetActive(false);
+            animRight.SetActive(false);
+        }
         if ((hori == 0) && (rb.velocity.x < 1) && (rb.velocity.x > -1)) animator.SetFloat("Speed", 1f);
     }
 

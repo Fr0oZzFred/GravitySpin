@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 6258710285758701435}
   - component: {fileID: 6258710285758701437}
   - component: {fileID: 6258710285758701434}
+  - component: {fileID: 561201608}
   m_Layer: 0
-  m_Name: Triangle
+  m_Name: Toupie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,9 +47,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a61025f7affe7e540936514b7949ab45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 20
+  forceJump: 20
+  forceJumpGravity: 40
   speed: 15
-  scaleForce: 10
+  canJump: 0
+  srBackground: {fileID: 0}
+  colorUp: {r: 0, g: 0.20784314, b: 0.3764706, a: 0.39215687}
+  colorDown: {r: 0, g: 0.23529412, b: 0.105882354, a: 0.39215687}
 --- !u!212 &6258710285758701435
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -153,3 +158,22 @@ PolygonCollider2D:
       - {x: 2.5815368, y: 1.1272265}
       - {x: 1.7572312, y: -1.2449081}
       - {x: 0.09939854, y: -2.55794}
+--- !u!95 &561201608
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6258710285758701439}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2ddeaa999e18af449be852317aac8e0e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

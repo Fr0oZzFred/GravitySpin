@@ -48,9 +48,11 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.ChangeState(oldGS);
         switch (GameState) {
             case GameStates.MainMenu:
-                LoadScene("MainMenu");
-                SoundManager.Instance.StopAllSounds();
-                SoundManager.Instance.Play("MainMenuTheme");
+                if(oldGS != GameStates.LevelSelection && oldGS != GameStates.Settings) {
+                    LoadScene("MainMenu");
+                    SoundManager.Instance.StopAllSounds();
+                    SoundManager.Instance.Play("MainMenuTheme");
+                }
                 Time.timeScale = 1f;
                 break;
             case GameStates.LevelSelection:

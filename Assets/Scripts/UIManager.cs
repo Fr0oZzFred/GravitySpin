@@ -13,7 +13,6 @@ public class UIManager : MonoBehaviour {
     [Header("GameOver")]
     public GameObject winGo;
     public GameObject looseGo;
-    public GameObject playNextLevelGo;
     [Header("Debug")]
     public bool enabledDebug;
     #endregion
@@ -32,7 +31,6 @@ public class UIManager : MonoBehaviour {
 
     public void GameOver(bool win) {
         winGo.SetActive(win);
-        playNextLevelGo.SetActive(win);
         looseGo.SetActive(!win);
         SoundManager.Instance.StopAllSounds();
         if (win) SoundManager.Instance.Play("WinTheme");
