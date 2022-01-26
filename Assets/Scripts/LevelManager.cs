@@ -7,6 +7,9 @@ public class LevelManager : MonoBehaviour {
     public bool win { get; private set; }
     public float gravityScale = 2.5f;
     public string soundName;
+    public GameObject arrow;
+    public GameObject particles;
+    public Obstacles box;
     public List<Obstacles> obstaclesGravitable;
     public List<Obstacles> backgroundDecor;
     public static LevelManager Instance { get; private set; }
@@ -41,9 +44,26 @@ public class LevelManager : MonoBehaviour {
         }
     }
     private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.GetComponent<PlayerController>() != null) {
+        PlayerController p = collision.GetComponent<PlayerController>();
+        if (p != null) {
             win = true;
-            GameManager.Instance.ChangeGameState("GameOver");
+            particles.SetActive(true);
+            arrow.SetActive(false);
+            if (box != null) { 
+                box.rotateSpeed = 0;
+                box.moveSpeedX = 0;
+                box.moveSpeedY = 0;
+            }
+            p.Stop();
+            p.enabled = false;
+        SoundManager.Instance.StopAllSounds();
+            StartCoroutine(End());
         }
+    }
+    IEnumerator End() {
+        SoundManager.Instance.StopAllSounds();
+        SoundManager.Instance.Play("WinTheme");
+        yield return new WaitForSeconds(2);
+        GameManager.Instance.ChangeGameState("GameOver");
     }
 }

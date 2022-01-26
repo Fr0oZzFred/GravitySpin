@@ -34,6 +34,13 @@ public class Obstacles : MonoBehaviour {
         PlayerController p = collision.GetComponent<PlayerController>();
         if (p != null) {
             p.canJump = true;
+            p.isGrounded = true;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision) {
+        PlayerController p = collision.GetComponent<PlayerController>();
+        if (p != null) {
+            p.isGrounded = false;
         }
     }
     void MoveX() {

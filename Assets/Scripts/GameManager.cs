@@ -14,9 +14,8 @@ public class GameManager : MonoBehaviour
 {
     #region Declaration
 
-    public int lastLevelDone = 1;
+    public int lastLevelDone = 0;
     public int levelCount;
-
     public enum GameStates {
         MainMenu,
         LevelSelection,
@@ -56,6 +55,7 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 1f;
                 break;
             case GameStates.LevelSelection:
+                UIManager.Instance.DisplayLevel(lastLevelDone);
                 break;
             case GameStates.Settings:
                 break;
@@ -66,9 +66,8 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 0f;
                 break;
             case GameStates.GameOver:
-                Time.timeScale = 0f;
                 UIManager.Instance.GameOver(LevelManager.Instance.win);
-                if (LevelManager.Instance.win) {
+                if (LevelManager.Instance.win && lastLevelDone < SceneManager.GetActiveScene().buildIndex) {
                     lastLevelDone = lastLevelDone < levelCount ? lastLevelDone + 1 : lastLevelDone;
                 }
                 break;

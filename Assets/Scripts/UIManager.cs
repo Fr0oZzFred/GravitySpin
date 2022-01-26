@@ -10,6 +10,8 @@ public class UIManager : MonoBehaviour {
     public List<GameObject> uIElements;
 
     //[Header("Text")]
+    [Header("LevelSelection")]
+    public List<GameObject> levelButtonList;
     [Header("GameOver")]
     public GameObject winGo;
     public GameObject looseGo;
@@ -29,13 +31,21 @@ public class UIManager : MonoBehaviour {
         uIElements[(int)GameManager.GameState].SetActive(true);
     }
 
+    public void DisplayLevel(int lastLevelDone) {
+        for(int i = 0; i < levelButtonList.Count; i++) {
+            if (i <= lastLevelDone) {
+                levelButtonList[i].SetActive(true);
+            } else {
+                levelButtonList[i].SetActive(false);
+            }
+        }
+    }
+
     public void GameOver(bool win) {
         winGo.SetActive(win);
         looseGo.SetActive(!win);
-        SoundManager.Instance.StopAllSounds();
-        if (win) SoundManager.Instance.Play("WinTheme");
-        else SoundManager.Instance.Play("LooseTheme");
     }
+
     #region Debug
     #endregion
 }
